@@ -15,5 +15,11 @@ namespace AutoReservation.BusinessLayer.Testing
         {
             throw new NotImplementedException("Test not implemented.");
         }
+
+        [Fact]
+        public void RetrieveAutos()
+        {
+            var test = Target.List;
+        }
     }
 }

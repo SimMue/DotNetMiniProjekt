@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AutoReservation.Dal.Entities
 {
@@ -7,8 +8,10 @@ namespace AutoReservation.Dal.Entities
     {
         public int Id { get; set; }
 
+        [MaxLength(20), Required]
         public string Nachname { get; set; }
 
+        [MaxLength(20), Required]
         public string Vorname { get; set; }
 
         public DateTime Geburtsdatum { get; set; }

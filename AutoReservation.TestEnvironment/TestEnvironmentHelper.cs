@@ -15,42 +15,42 @@ namespace AutoReservation.TestEnvironment
 
         public static void InitializeTestData(this AutoReservationContext context)
         {
-            string luxusklasseAutoTableName = context.GetTableName<LuxusklasseAuto>();
-            string mittelklasseAutoTableName = context.GetTableName<MittelklasseAuto>();
-            string standardAutoTableName = context.GetTableName<StandardAuto>();
-            string autoTableName = context.GetTableName<Auto>();
-            string kundeTableName = context.GetTableName<Kunde>();
-            string reservationTableName = context.GetTableName<Reservation>();
+            //string luxusklasseAutoTableName = context.GetTableName<LuxusklasseAuto>();
+            //string mittelklasseAutoTableName = context.GetTableName<MittelklasseAuto>();
+            //string standardAutoTableName = context.GetTableName<StandardAuto>();
+            //string autoTableName = context.GetTableName<Auto>();
+            //string kundeTableName = context.GetTableName<Kunde>();
+            //string reservationTableName = context.GetTableName<Reservation>();
 
-            try
-            {
-                // Delete all records from tables
-                //      > Cleanup for specific subtypes necessary when not using table per hierarchy (TPH)
-                //        since entities will be stored in different tables.
-                context.DeleteAllRecords(reservationTableName);
-                if (luxusklasseAutoTableName != autoTableName)
-                {
-                    context.DeleteAllRecords(luxusklasseAutoTableName);
-                }
-                if (mittelklasseAutoTableName != autoTableName)
-                {
-                    context.DeleteAllRecords(mittelklasseAutoTableName);
-                }
-                if (standardAutoTableName != autoTableName)
-                {
-                    context.DeleteAllRecords(standardAutoTableName);
-                }
-                context.DeleteAllRecords(autoTableName);
-                context.DeleteAllRecords(kundeTableName);
+            //try
+            //{
+            //    // Delete all records from tables
+            //    //      > Cleanup for specific subtypes necessary when not using table per hierarchy (TPH)
+            //    //        since entities will be stored in different tables.
+            //    context.DeleteAllRecords(reservationTableName);
+            //    if (luxusklasseAutoTableName != autoTableName)
+            //    {
+            //        context.DeleteAllRecords(luxusklasseAutoTableName);
+            //    }
+            //    if (mittelklasseAutoTableName != autoTableName)
+            //    {
+            //        context.DeleteAllRecords(mittelklasseAutoTableName);
+            //    }
+            //    if (standardAutoTableName != autoTableName)
+            //    {
+            //        context.DeleteAllRecords(standardAutoTableName);
+            //    }
+            //    context.DeleteAllRecords(autoTableName);
+            //    context.DeleteAllRecords(kundeTableName);
 
-                SeedAuto(context, luxusklasseAutoTableName, mittelklasseAutoTableName, standardAutoTableName, autoTableName);
-                SeedKunde(context, kundeTableName);
-                SeedReservation(context, reservationTableName);
-            }
-            catch (Exception ex)
-            {
-                throw new ApplicationException(InitializationError, ex);
-            }
+            //    SeedAuto(context, luxusklasseAutoTableName, mittelklasseAutoTableName, standardAutoTableName, autoTableName);
+            //    SeedKunde(context, kundeTableName);
+            //    SeedReservation(context, reservationTableName);
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw new ApplicationException(InitializationError, ex);
+            //}
         }
 
         private static void SeedAuto(

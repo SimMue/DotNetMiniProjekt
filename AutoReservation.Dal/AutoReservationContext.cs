@@ -38,6 +38,7 @@ namespace AutoReservation.Dal
                 .HasValue<LuxusklasseAuto>(0)
                 .HasValue<MittelklasseAuto>(1)
                 .HasValue<StandardAuto>(2);
+
             base.OnModelCreating(modelBuilder);
         }
     }
