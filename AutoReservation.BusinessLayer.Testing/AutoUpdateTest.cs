@@ -17,7 +17,7 @@ namespace AutoReservation.BusinessLayer.Testing
         }
 
         [Fact]
-        public void RetrieveAutos()
+        public void RetrieveAutosTest()
         {
             var test = Target.List;
         }
