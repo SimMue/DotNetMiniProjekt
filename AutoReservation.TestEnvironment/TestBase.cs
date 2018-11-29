@@ -13,7 +13,7 @@ namespace AutoReservation.TestEnvironment
         /// </summary>
         protected TestBase()
         {
-            InitializeTestEnvironment();
+            //InitializeTestEnvironment();
         }
 
         /// <summary>
