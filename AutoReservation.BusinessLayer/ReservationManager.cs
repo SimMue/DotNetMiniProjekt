@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using AutoReservation.BusinessLayer.Exceptions;
 using AutoReservation.Dal;
 using AutoReservation.Dal.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -32,9 +33,18 @@ namespace AutoReservation.BusinessLayer
 
         public void Insert(Reservation reservation)
         {
+            if (!DateRangeCheck(reservation))
+            {
+                throw new InvalidDateRangeException($"Hours is lesser than 24 Hours, date is {(reservation.Bis - reservation.Von).TotalHours}");
+            }
+
+            if (!CheckAvailability(reservation))
+            {
+                throw new AutoUnaviableException($"No Car available for this date");
+            }
+
             using (AutoReservationContext context = new AutoReservationContext())
             {
-                // Insert
                 context.Entry(reservation).State = EntityState.Added;
                 context.SaveChanges();
             }
@@ -43,11 +53,20 @@ namespace AutoReservation.BusinessLayer
 
         public void Update(Reservation reservation)
         {
+            if (!DateRangeCheck(reservation))
+            {
+                throw new InvalidDateRangeException($"Hours is lesser than 24 Hours, date is {(reservation.Bis - reservation.Von).TotalHours}");
+            }
+
+            if (!CheckAvailability(reservation))
+            {
+                throw new AutoUnaviableException($"No Car available for this date");
+            }
+
             using (AutoReservationContext context = new AutoReservationContext())
             {
                 try
                 {
-                    // Update
                     context.Entry(reservation).State = EntityState.Modified;
                     context.SaveChanges();
                 }
@@ -55,7 +74,6 @@ namespace AutoReservation.BusinessLayer
                 {
                     throw CreateOptimisticConcurrencyException(context, reservation);
                 }
-
             }
         }
 
@@ -63,11 +81,22 @@ namespace AutoReservation.BusinessLayer
         {
             using (AutoReservationContext context = new AutoReservationContext())
             {
-                // Delete
                 context.Entry(reservation).State = EntityState.Deleted;
                 context.SaveChanges();
             }
 
+        }
+        
+        private bool DateRangeCheck(Reservation reservation)
+        {
+            //TODO Working correct?
+            return reservation != null && (reservation.Bis - reservation.Von).TotalHours >= 24;
+        }
+
+        private bool CheckAvailability(Reservation reservation)
+        {
+            //TODO Working correct?
+            return reservation != null && GetById(reservation.AutoId).Bis <= reservation.Von;
         }
     }
 }
