@@ -25,7 +25,7 @@ namespace AutoReservation.BusinessLayer
         {
             using (AutoReservationContext context = new AutoReservationContext())
             {
-                return context.Reservationen.ToList().First(r => r.ReservationsNr == id);
+                return context.Reservationen.ToList().Single(r => r.ReservationsNr == id);
             }
         }
 
