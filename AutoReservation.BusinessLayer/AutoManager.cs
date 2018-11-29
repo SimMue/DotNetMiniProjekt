@@ -44,8 +44,8 @@ namespace AutoReservation.BusinessLayer
             {
                 try
                 {
-                    context.SaveChanges();
                     context.Entry(auto).State = EntityState.Modified;
+                    context.SaveChanges();
                 }
                 catch (DbUpdateConcurrencyException e)
                 {
