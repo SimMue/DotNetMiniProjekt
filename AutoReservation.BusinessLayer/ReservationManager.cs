@@ -29,7 +29,7 @@ namespace AutoReservation.BusinessLayer
             }
         }
 
-        public void Add(Reservation reservation)
+        public void Insert(Reservation reservation)
         {
             using (AutoReservationContext context = new AutoReservationContext())
             {
