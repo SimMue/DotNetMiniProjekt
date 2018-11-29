@@ -9,6 +9,8 @@ namespace AutoReservation.Dal.Entities
     {
         public int Id { get; set; }
 
+        public int AutoKlasse { get; set; }
+
         [MaxLength(20), Required]
         public string Marke { get; set; }
 
