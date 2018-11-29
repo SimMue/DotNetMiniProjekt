@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using AutoReservation.Dal;
 using AutoReservation.Dal.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -44,11 +45,18 @@ namespace AutoReservation.BusinessLayer
         {
             using (AutoReservationContext context = new AutoReservationContext())
             {
-                // Update
-                context.Entry(reservation).State = EntityState.Modified;
-                context.SaveChanges();
-            }
+                try
+                {
+                    // Update
+                    context.Entry(reservation).State = EntityState.Modified;
+                    context.SaveChanges();
+                }
+                catch (DbUpdateConcurrencyException e)
+                {
+                    throw CreateOptimisticConcurrencyException(context, reservation);
+                }
 
+            }
         }
 
         public void Delete(Reservation reservation)

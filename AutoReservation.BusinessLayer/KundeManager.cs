@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
@@ -43,11 +44,19 @@ namespace AutoReservation.BusinessLayer
 
         public void Update(Kunde kunde)
         {
+
             using (AutoReservationContext context = new AutoReservationContext())
             {
-                // Update
-                context.Entry(kunde).State = EntityState.Modified;
-                context.SaveChanges();
+                try
+                {
+                    // Update
+                    context.Entry(kunde).State = EntityState.Modified;
+                    context.SaveChanges();
+                }
+                catch (DbUpdateConcurrencyException e)
+                {
+                    throw CreateOptimisticConcurrencyException(context, kunde);
+                }
             }
 
         }
