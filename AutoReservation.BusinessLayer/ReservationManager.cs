@@ -55,7 +55,7 @@ namespace AutoReservation.BusinessLayer
         {
             if (!DateRangeCheck(reservation))
             {
-                throw new InvalidDateRangeException($"Hours is lesser than 24 Hours, date is {(reservation.Bis - reservation.Von).TotalHours}");
+                throw new InvalidDateRangeException($"Hours is lesser than 24 Hours");
             }
 
             if (!CheckAvailability(reservation))
@@ -89,14 +89,14 @@ namespace AutoReservation.BusinessLayer
         
         private bool DateRangeCheck(Reservation reservation)
         {
-            //TODO Working correct?
             return reservation != null && (reservation.Bis - reservation.Von).TotalHours >= 24;
         }
 
         private bool CheckAvailability(Reservation reservation)
         {
-            //TODO Working correct?
-            return reservation != null && GetById(reservation.AutoId).Bis <= reservation.Von;
+            return reservation != null && 
+                   GetById(reservation.AutoId) != null && 
+                   GetById(reservation.AutoId).Bis <= reservation.Von;
         }
     }
 }
