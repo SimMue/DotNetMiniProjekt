@@ -9,20 +9,17 @@ using Microsoft.EntityFrameworkCore;
 namespace AutoReservation.BusinessLayer
 {
     public class ReservationManager
-        : ManagerBase
+        : ManagerBase<Reservation>
     {
-        public List<Reservation> List
+        public override List<Reservation> GetAll()
         {
-            get
+            using (AutoReservationContext context = new AutoReservationContext())
             {
-                using (AutoReservationContext context = new AutoReservationContext())
-                {
-                    return context.Reservationen.ToList();
-                }
+                return context.Reservationen.ToList();
             }
         }
 
-        public Reservation GetById(int id)
+        public override Reservation GetById(int id)
         {
             using (AutoReservationContext context = new AutoReservationContext())
             {
@@ -30,7 +27,7 @@ namespace AutoReservation.BusinessLayer
             }
         }
 
-        public void Insert(Reservation reservation)
+        public override void Insert(Reservation reservation)
         {
             using (AutoReservationContext context = new AutoReservationContext())
             {
@@ -41,7 +38,7 @@ namespace AutoReservation.BusinessLayer
 
         }
 
-        public void Update(Reservation reservation)
+        public override void Update(Reservation reservation)
         {
             using (AutoReservationContext context = new AutoReservationContext())
             {
@@ -59,7 +56,7 @@ namespace AutoReservation.BusinessLayer
             }
         }
 
-        public void Delete(Reservation reservation)
+        public override void Delete(Reservation reservation)
         {
             using (AutoReservationContext context = new AutoReservationContext())
             {
