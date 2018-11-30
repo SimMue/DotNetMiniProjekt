@@ -28,34 +28,34 @@ namespace AutoReservation.BusinessLayer
             }
         }
 
-        public override void Insert(Reservation reservation)
+        public override void Insert(Reservation entity)
         {
-            if (!DateRangeCheck(reservation))
+            if (!DateRangeCheck(entity))
             {
-                throw new InvalidDateRangeException($"Hours is lesser than 24 Hours, date is {(reservation.Bis - reservation.Von).TotalHours}");
+                throw new InvalidDateRangeException($"Hours is lesser than 24 Hours, date is {(entity.Bis - entity.Von).TotalHours}");
             }
 
-            if (!CheckAvailability(reservation))
+            if (!CheckAvailability(entity))
             {
                 throw new AutoUnaviableException($"No Car available for this date");
             }
 
             using (AutoReservationContext context = new AutoReservationContext())
             {
-                context.Entry(reservation).State = EntityState.Added;
+                context.Entry(entity).State = EntityState.Added;
                 context.SaveChanges();
             }
 
         }
 
-        public override void Update(Reservation reservation)
+        public override void Update(Reservation entity)
         {
-            if (!DateRangeCheck(reservation))
+            if (!DateRangeCheck(entity))
             {
                 throw new InvalidDateRangeException($"Hours is lesser than 24 Hours");
             }
 
-            if (!CheckAvailability(reservation))
+            if (!CheckAvailability(entity))
             {
                 throw new AutoUnaviableException($"No Car available for this date");
             }
@@ -64,21 +64,21 @@ namespace AutoReservation.BusinessLayer
             {
                 try
                 {
-                    context.Entry(reservation).State = EntityState.Modified;
+                    context.Entry(entity).State = EntityState.Modified;
                     context.SaveChanges();
                 }
                 catch (DbUpdateConcurrencyException e)
                 {
-                    throw CreateOptimisticConcurrencyException(context, reservation);
+                    throw CreateOptimisticConcurrencyException(context, entity);
                 }
             }
         }
 
-        public override void Delete(Reservation reservation)
+        public override void Delete(Reservation entity)
         {
             using (AutoReservationContext context = new AutoReservationContext())
             {
-                context.Entry(reservation).State = EntityState.Deleted;
+                context.Entry(entity).State = EntityState.Deleted;
                 context.SaveChanges();
             }
 

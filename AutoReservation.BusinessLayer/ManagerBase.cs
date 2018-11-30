@@ -4,13 +4,13 @@ using AutoReservation.Dal;
 
 namespace AutoReservation.BusinessLayer
 {
-    public abstract class ManagerBase<T>
+    public abstract class ManagerBase<TEntity>
     {
-        public abstract List<T> GetAll();
-        public abstract T GetById(int id);
-        public abstract void Insert(T entry);
-        public abstract void Update(T entry);
-        public abstract void Delete(T entry);
+        public abstract List<TEntity> GetAll();
+        public abstract TEntity GetById(int id);
+        public abstract void Insert(TEntity entity);
+        public abstract void Update(TEntity entity);
+        public abstract void Delete(TEntity entity);
 
         protected static OptimisticConcurrencyException<T> CreateOptimisticConcurrencyException<T>(AutoReservationContext context, T entity)
             where T : class

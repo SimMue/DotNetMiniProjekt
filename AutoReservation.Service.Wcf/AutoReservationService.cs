@@ -4,94 +4,58 @@ using System.Diagnostics;
 using AutoReservation.BusinessLayer;
 using AutoReservation.Common.DataTransferObjects;
 using AutoReservation.Common.Interfaces;
+using AutoReservation.Dal.Entities;
+using AutoReservation.Service.Wcf.Converters;
 
 namespace AutoReservation.Service.Wcf
 {
-    public class AutoReservationService : IAutoReservationService
+    public class AutoReservationService<TDto, TEntity> : IAutoReservationService<TDto>
     {
-        private KundeManager kundeManager;
+        private readonly ManagerBase<TEntity> _manager;
+        private readonly DtoEntityConverter<TDto, TEntity> _converter;
+
+        public AutoReservationService(ManagerBase<TEntity> manager, DtoEntityConverter<TDto, TEntity> converter)
+        {
+            _manager = manager;
+            _converter = converter;
+        }
 
         private static void WriteActualMethod()
-            => Console.WriteLine($"Calling: {new StackTrace().GetFrame(1).GetMethod().Name}");
+            => Console.WriteLine($"Calling: {new StackTrace().GetFrame(1).GetMethod().Name}-{typeof(TDto).Namespace}");
 
-        public List<AutoDto> GetAllAutos()
+        public List<TDto> GetAll()
         {
-            throw new NotImplementedException();
+            WriteActualMethod();
+            List<TEntity> entities = _manager.GetAll();
+            return _converter.ConvertToDtos(entities);
         }
 
-        public List<KundeDto> GetAllKunden()
+        public TDto GetById(int id)
         {
-            throw new NotImplementedException();
+            WriteActualMethod();
+            TEntity entity = _manager.GetById(id);
+            return _converter.ConvertToDto(entity);
         }
 
-        public List<ReservationDto> GetAllReservationen()
+        public void Insert(TDto dto)
         {
-            throw new NotImplementedException();
+            WriteActualMethod();
+            TEntity entity = _converter.ConvertToEntity(dto);
+            _manager.Insert(entity);
         }
 
-        public AutoDto GetAutoById(int id)
+        public void Update(TDto dto)
         {
-            throw new NotImplementedException();
+            WriteActualMethod();
+            TEntity entity = _converter.ConvertToEntity(dto);
+            _manager.Update(entity);
         }
 
-        public KundeDto GetKundeById(int id)
+        public void Delete(TDto dto)
         {
-            throw new NotImplementedException();
-        }
-
-        public ReservationDto GetReservationById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void InsertAuto(AutoDto auto)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void InsertKunde(KundeDto kunde)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void InsertReservation(ReservationDto reservation)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UpdateAuto(AutoDto auto)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UpdateKunde(KundeDto kunde)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void UpdateReservation(ReservationDto reservation)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteAuto(AutoDto auto)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteKunde(KundeDto kunde)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteReservation(ReservationDto reservation)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool CheckAvailability(AutoDto auto)
-        {
-            throw new NotImplementedException();
+            WriteActualMethod();
+            TEntity entity = _converter.ConvertToEntity(dto);
+            _manager.Delete(entity);
         }
     }
 }

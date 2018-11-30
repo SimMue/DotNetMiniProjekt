@@ -28,39 +28,39 @@ namespace AutoReservation.BusinessLayer
             }
         }
 
-        public override void Insert(Kunde kunde)
+        public override void Insert(Kunde entity)
         {
             using (AutoReservationContext context = new AutoReservationContext())
             {
-                context.Entry(kunde).State = EntityState.Added;
+                context.Entry(entity).State = EntityState.Added;
                 context.SaveChanges();
             }
 
         }
 
-        public override void Update(Kunde kunde)
+        public override void Update(Kunde entity)
         {
 
             using (AutoReservationContext context = new AutoReservationContext())
             {
                 try
                 {
-                    context.Entry(kunde).State = EntityState.Modified;
+                    context.Entry(entity).State = EntityState.Modified;
                     context.SaveChanges();
                 }
                 catch (DbUpdateConcurrencyException e)
                 {
-                    throw CreateOptimisticConcurrencyException(context, kunde);
+                    throw CreateOptimisticConcurrencyException(context, entity);
                 }
             }
 
         }
 
-        public override void Delete(Kunde kunde)
+        public override void Delete(Kunde entity)
         {
             using (AutoReservationContext context = new AutoReservationContext())
             {
-                context.Entry(kunde).State = EntityState.Deleted;
+                context.Entry(entity).State = EntityState.Deleted;
                 context.SaveChanges();
             }
 

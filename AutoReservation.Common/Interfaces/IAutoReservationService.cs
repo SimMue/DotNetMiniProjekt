@@ -3,38 +3,16 @@ using AutoReservation.Common.DataTransferObjects;
 
 namespace AutoReservation.Common.Interfaces
 {
-    public interface IAutoReservationService
+    public interface IAutoReservationService<TDto>
     {
-        List<AutoDto> GetAllAutos();
+        List<TDto> GetAll();
 
-        List<KundeDto> GetAllKunden();
+        TDto GetById(int id);
 
-        List<ReservationDto> GetAllReservationen();
+        void Insert(TDto dto);
 
-        AutoDto GetAutoById(int id);
+        void Update(TDto dto);
 
-        KundeDto GetKundeById(int id);
-
-        ReservationDto GetReservationById(int id);
-
-        void InsertAuto(AutoDto auto);
-
-        void InsertKunde(KundeDto kunde);
-
-        void InsertReservation(ReservationDto reservation);
-
-        void UpdateAuto(AutoDto auto);
-
-        void UpdateKunde(KundeDto kunde);
-
-        void UpdateReservation(ReservationDto reservation);
-
-        void DeleteAuto(AutoDto auto);
-
-        void DeleteKunde(KundeDto kunde);
-
-        void DeleteReservation(ReservationDto reservation);
-
-        bool CheckAvailability(AutoDto auto);
+        void Delete(TDto dto);
     }
 }
