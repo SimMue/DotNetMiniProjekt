@@ -14,14 +14,14 @@ namespace AutoReservation.BusinessLayer.Testing
         [Fact]
         public void UpdateKundeTest()
         {
-            Kunde changedKunde = target.GetById(1);
+            Kunde changedKunde = Target.GetById(1);
             changedKunde.Nachname = "Beil";
             changedKunde.Vorname = "Timo";
             changedKunde.Geburtsdatum = new DateTime();
 
-            target.Update(changedKunde);
+            Target.Update(changedKunde);
 
-            Kunde dbKunde = target.GetById(1);
+            Kunde dbKunde = Target.GetById(1);
 
             Assert.Equal(changedKunde.Id, dbKunde.Id);
             Assert.Equal(changedKunde.Nachname, dbKunde.Nachname);
