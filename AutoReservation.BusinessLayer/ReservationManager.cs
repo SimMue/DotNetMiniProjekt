@@ -37,7 +37,7 @@ namespace AutoReservation.BusinessLayer
 
             if (!CheckAvailability(entity))
             {
-                throw new AutoUnaviableException($"No Car available for this date");
+                throw new AutoUnavailableException($"No Car available for this date");
             }
 
             using (AutoReservationContext context = new AutoReservationContext())
@@ -57,7 +57,7 @@ namespace AutoReservation.BusinessLayer
 
             if (!CheckAvailability(entity))
             {
-                throw new AutoUnaviableException($"No Car available for this date");
+                throw new AutoUnavailableException($"No Car available for this date");
             }
 
             using (AutoReservationContext context = new AutoReservationContext())

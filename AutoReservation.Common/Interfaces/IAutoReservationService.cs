@@ -1,18 +1,35 @@
 ﻿using System.Collections.Generic;
+using System.ServiceModel;
 using AutoReservation.Common.DataTransferObjects;
+using AutoReservation.Common.DataTransferObjects.Faults;
 
 namespace AutoReservation.Common.Interfaces
 {
     public interface IAutoReservationService<TDto>
     {
-        List<TDto> GetAll();
+	    [OperationContract]
+	    [FaultContract(typeof(UnknownFault))]
+		List<TDto> GetAll();
 
-        TDto GetById(int id);
+	    [OperationContract]
+	    [FaultContract(typeof(UnknownFault))]
+		TDto GetById(int id);
 
-        void Insert(TDto dto);
+	    [OperationContract]
+	    [FaultContract(typeof(InvalidDateRangeFault))]
+	    [FaultContract(typeof(AutoUnavailableFault))]
+	    [FaultContract(typeof(UnknownFault))]
+		void Insert(TDto dto);
 
-        void Update(TDto dto);
+	    [OperationContract]
+	    [FaultContract(typeof(InvalidDateRangeFault))]
+	    [FaultContract(typeof(AutoUnavailableFault))]
+	    [FaultContract(typeof(OptimisticConcurrencyFault))]
+	    [FaultContract(typeof(UnknownFault))]
+		void Update(TDto dto);
 
-        void Delete(TDto dto);
+	    [OperationContract]
+	    [FaultContract(typeof(UnknownFault))]
+		void Delete(TDto dto);
     }
 }
