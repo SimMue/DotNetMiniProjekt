@@ -4,16 +4,8 @@ using AutoReservation.Dal.Entities;
 
 namespace AutoReservation.Service.Wcf.Converters
 {
-    class ReservationConverter : DtoEntityConverter<ReservationDto, Reservation>
+    public class ReservationConverter : DtoEntityConverter<ReservationDto, Reservation>
     {
-        private readonly DtoEntityConverter<AutoDto, Auto> _autoConverter;
-        private readonly DtoEntityConverter<KundeDto, Kunde> _kundeConverter;
-
-        public ReservationConverter(DtoEntityConverter<AutoDto, Auto> autoConverter, DtoEntityConverter<KundeDto, Kunde> kundeConverter)
-        {
-            _autoConverter = autoConverter;
-            _kundeConverter = kundeConverter;
-        }
         public override Reservation ConvertToEntity(ReservationDto dto)
         {
             if (dto == null) { return null; }
@@ -23,8 +15,8 @@ namespace AutoReservation.Service.Wcf.Converters
                 ReservationsNr = dto.ReservationsNr,
                 Von = dto.Von,
                 Bis = dto.Bis,
-                AutoId = dto.Auto.Id,
-                KundeId = dto.Kunde.Id,
+                AutoId = dto.AutoId,
+                KundeId = dto.KundeId,
                 RowVersion = dto.RowVersion
             };
 
@@ -41,8 +33,8 @@ namespace AutoReservation.Service.Wcf.Converters
                 Von = entity.Von,
                 Bis = entity.Bis,
                 RowVersion = entity.RowVersion,
-                Auto = _autoConverter.ConvertToDto(entity.Auto),
-                Kunde = _kundeConverter.ConvertToDto(entity.Kunde)
+                AutoId = entity.AutoId,
+                KundeId = entity.KundeId
             };
         }
 

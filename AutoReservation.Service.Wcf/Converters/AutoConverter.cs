@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using AutoReservation.Common.DataTransferObjects;
 using AutoReservation.Dal.Entities;
-using AutoReservation.Service.Wcf.Converters;
 
-namespace AutoReservation.Service.Wcf
+namespace AutoReservation.Service.Wcf.Converters
 {
-    class AutoConverter : DtoEntityConverter<AutoDto, Auto>
+    public class AutoConverter : DtoEntityConverter<AutoDto, Auto>
     {
         public override Auto ConvertToEntity(AutoDto dto)
         {

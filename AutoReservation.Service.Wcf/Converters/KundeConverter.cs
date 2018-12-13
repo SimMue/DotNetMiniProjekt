@@ -4,7 +4,7 @@ using AutoReservation.Dal.Entities;
 
 namespace AutoReservation.Service.Wcf.Converters
 {
-    class KundeConverter : DtoEntityConverter<KundeDto, Kunde>
+    public class KundeConverter : DtoEntityConverter<KundeDto, Kunde>
     {
         public override Kunde ConvertToEntity(KundeDto dto)
         {

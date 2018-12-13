@@ -6,9 +6,9 @@ namespace AutoReservation.Common.DataTransferObjects
     {
         public int ReservationsNr { get; set; }
 
-        public AutoDto Auto { get; set; }
+        public int AutoId { get; set; }
 
-        public KundeDto Kunde { get; set; }
+        public int KundeId { get; set; }
 
         public DateTime Von { get; set; }
 
@@ -17,6 +17,6 @@ namespace AutoReservation.Common.DataTransferObjects
         public byte[] RowVersion { get; set; }
 
         public override string ToString()
-            => $"{ReservationsNr}; {Von}; {Bis}; {Auto}; {Kunde}";
+            => $"{ReservationsNr}; {Von}; {Bis}; {AutoId}; {KundeId}";
     }
 }
