@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.ServiceModel;
-using AutoReservation.Common.DataTransferObjects;
 using AutoReservation.Common.DataTransferObjects.Faults;
 
 namespace AutoReservation.Common.Interfaces
@@ -15,7 +14,11 @@ namespace AutoReservation.Common.Interfaces
 	    [FaultContract(typeof(UnknownFault))]
 		TDto GetById(int id);
 
-	    [OperationContract]
+		[OperationContract]
+		[FaultContract(typeof(UnknownFault))]
+	    bool CheckAvailability(TDto dto);
+
+		[OperationContract]
 	    [FaultContract(typeof(InvalidDateRangeFault))]
 	    [FaultContract(typeof(AutoUnavailableFault))]
 	    [FaultContract(typeof(UnknownFault))]

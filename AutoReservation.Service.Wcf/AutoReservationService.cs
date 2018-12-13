@@ -4,18 +4,16 @@ using System.Diagnostics;
 using System.ServiceModel;
 using AutoReservation.BusinessLayer;
 using AutoReservation.BusinessLayer.Exceptions;
-using AutoReservation.Common.DataTransferObjects;
 using AutoReservation.Common.DataTransferObjects.Faults;
 using AutoReservation.Common.Interfaces;
-using AutoReservation.Dal.Entities;
 using AutoReservation.Service.Wcf.Converters;
 
 namespace AutoReservation.Service.Wcf
 {
-    public class AutoReservationService<TDto, TEntity> : IAutoReservationService<TDto>
+    public abstract class AutoReservationService<TDto, TEntity> : IAutoReservationService<TDto>
     {
-        private readonly ManagerBase<TEntity> _manager;
-        private readonly DtoEntityConverter<TDto, TEntity> _converter;
+        protected readonly ManagerBase<TEntity> _manager;
+        protected readonly DtoEntityConverter<TDto, TEntity> _converter;
 
         public AutoReservationService(ManagerBase<TEntity> manager, DtoEntityConverter<TDto, TEntity> converter)
         {
@@ -23,7 +21,7 @@ namespace AutoReservation.Service.Wcf
             _converter = converter;
         }
 
-        private static void WriteActualMethod()
+        protected static void WriteActualMethod()
             => Console.WriteLine($"Calling: {new StackTrace().GetFrame(1).GetMethod().Name}-{typeof(TDto).Namespace}");
 
         public List<TDto> GetAll()
@@ -60,7 +58,9 @@ namespace AutoReservation.Service.Wcf
 	        }
 		}
 
-        public void Insert(TDto dto)
+	    public abstract bool CheckAvailability(TDto dto);
+		
+		public void Insert(TDto dto)
         {
 	        try
 	        {

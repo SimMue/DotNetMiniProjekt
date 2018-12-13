@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using AutoReservation.BusinessLayer.Exceptions;
 using AutoReservation.Dal;
 using AutoReservation.Dal.Entities;
@@ -89,7 +87,7 @@ namespace AutoReservation.BusinessLayer
             return reservation != null && (reservation.Bis - reservation.Von).TotalHours >= 24;
         }
 
-        private bool CheckAvailability(Reservation reservation)
+        public bool CheckAvailability(Reservation reservation)
         {
             return reservation != null && 
                    GetById(reservation.AutoId) != null && 

@@ -1,5 +1,4 @@
-﻿using System;
-using AutoReservation.Dal.Entities;
+﻿using AutoReservation.Dal.Entities;
 using AutoReservation.TestEnvironment;
 using Xunit;
 
