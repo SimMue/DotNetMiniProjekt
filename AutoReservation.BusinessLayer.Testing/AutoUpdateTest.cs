@@ -5,8 +5,7 @@ using Xunit;
 
 namespace AutoReservation.BusinessLayer.Testing
 {
-    public class AutoUpdateTests
-        : TestBase
+    public class AutoUpdateTests : TestBase
     {
         private AutoManager target;
         private AutoManager Target => target ?? (target = new AutoManager());
@@ -14,28 +13,21 @@ namespace AutoReservation.BusinessLayer.Testing
         [Fact]
         public void UpdateAutoTest()
         {
-            LuxusklasseAuto changedAuto = (LuxusklasseAuto) target.GetById(3);
+            LuxusklasseAuto changedAuto = (LuxusklasseAuto) Target.GetById(3);
             changedAuto.Marke = "VW Golf";
             changedAuto.Tagestarif = 120;
             changedAuto.Basistarif = 50;
-            changedAuto.AutoKlasse = 3;
 
-            target.Update(changedAuto);
+            Target.Update(changedAuto);
 
-            LuxusklasseAuto dbAuto = (LuxusklasseAuto) target.GetById(3);
+            LuxusklasseAuto dbAuto = (LuxusklasseAuto)Target.GetById(3);
 
             Assert.Equal(changedAuto.Id, dbAuto.Id);
-            Assert.NotEqual(changedAuto.Marke, dbAuto.Marke);
-            Assert.NotEqual(changedAuto.Tagestarif, dbAuto.Tagestarif);
-            Assert.NotEqual(changedAuto.Basistarif, dbAuto.Basistarif);
-            Assert.NotEqual(changedAuto.AutoKlasse, dbAuto.AutoKlasse);
-            Assert.NotEqual(changedAuto.RowVersion, dbAuto.RowVersion);
+            Assert.Equal(changedAuto.Marke, dbAuto.Marke);
+            Assert.Equal(changedAuto.Tagestarif, dbAuto.Tagestarif);
+            Assert.Equal(changedAuto.Basistarif, dbAuto.Basistarif);
+            Assert.Equal(changedAuto.RowVersion, dbAuto.RowVersion);
         }
 
-        [Fact]
-        public void RetrieveAutosTest()
-        {
-            var test = Target.List;
-        }
     }
 }
