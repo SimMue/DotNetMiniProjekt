@@ -1,6 +1,8 @@
 ﻿using System;
 using System.ServiceModel;
+using AutoReservation.Common.DataTransferObjects;
 using AutoReservation.Common.Interfaces;
+using AutoReservation.Dal.Entities;
 using Xunit;
 
 namespace AutoReservation.Service.Wcf.Testing
@@ -16,19 +18,22 @@ namespace AutoReservation.Service.Wcf.Testing
             this.serviceTestRemoteFixture = serviceTestRemoteFixture;
         }
 
-        private IAutoReservationService target;
-        protected override IAutoReservationService Target
+        private IAutoReservationService<AutoDto> autoTarget;
+        protected override IAutoReservationService<AutoDto> AutoTarget
         {
             get
             {
-                if (target == null)
+                if (autoTarget == null)
                 {
-                    ChannelFactory<IAutoReservationService> channelFactory = new ChannelFactory<IAutoReservationService>("AutoReservationService");
-                    target = channelFactory.CreateChannel();
+                    ChannelFactory<IAutoReservationService<AutoDto>> channelFactory = new ChannelFactory<IAutoReservationService<AutoDto>>("AutoReservationService");
+                    autoTarget = channelFactory.CreateChannel();
                 }
-                return target;
+                return autoTarget;
             }
         }
+
+        protected override IAutoReservationService<KundeDto> KundeTarget { get; }
+        protected override IAutoReservationService<ReservationDto> ReservationTarget { get; }
     }
 
     public class ServiceTestRemoteFixture
@@ -36,7 +41,7 @@ namespace AutoReservation.Service.Wcf.Testing
     {
         public ServiceTestRemoteFixture()
         {
-            ServiceHost = new ServiceHost(typeof(AutoReservationService));
+            ServiceHost = new ServiceHost(typeof(AutoReservationService<AutoDto, Auto>));
             ServiceHost.Open();
         }
 

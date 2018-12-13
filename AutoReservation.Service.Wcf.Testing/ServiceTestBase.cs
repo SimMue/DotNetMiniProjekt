@@ -1,4 +1,5 @@
 ﻿using System;
+using AutoReservation.Common.DataTransferObjects;
 using AutoReservation.Common.Interfaces;
 using AutoReservation.TestEnvironment;
 using Xunit;
@@ -8,26 +9,28 @@ namespace AutoReservation.Service.Wcf.Testing
     public abstract class ServiceTestBase
         : TestBase
     {
-        protected abstract IAutoReservationService Target { get; }
+        protected abstract IAutoReservationService<AutoDto> AutoTarget { get; }
+        protected abstract IAutoReservationService<KundeDto> KundeTarget { get; }
+        protected abstract IAutoReservationService<ReservationDto> ReservationTarget { get; }
 
         #region Read all entities
 
         [Fact]
         public void GetAutosTest()
         {
-            throw new NotImplementedException("Test not implemented.");
+            Assert.Equal(4, AutoTarget.GetAll().Count);
         }
 
         [Fact]
         public void GetKundenTest()
         {
-            throw new NotImplementedException("Test not implemented.");
+            Assert.Equal(4, KundeTarget.GetAll().Count);
         }
 
         [Fact]
         public void GetReservationenTest()
         {
-            throw new NotImplementedException("Test not implemented.");
+            Assert.Equal(4, ReservationTarget.GetAll().Count);
         }
 
         #endregion
@@ -37,19 +40,19 @@ namespace AutoReservation.Service.Wcf.Testing
         [Fact]
         public void GetAutoByIdTest()
         {
-            throw new NotImplementedException("Test not implemented.");
+            Assert.Equal("Fiat Punto", AutoTarget.GetById(1).Marke);
         }
 
         [Fact]
         public void GetKundeByIdTest()
         {
-            throw new NotImplementedException("Test not implemented.");
+            Assert.Equal("Nass", KundeTarget.GetById(1).Nachname);
         }
 
         [Fact]
         public void GetReservationByNrTest()
         {
-            throw new NotImplementedException("Test not implemented.");
+            Assert.Equal(1, ReservationTarget.GetById(1).KundeId);
         }
 
         #endregion
