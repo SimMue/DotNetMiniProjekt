@@ -23,8 +23,7 @@ namespace AutoReservation.BusinessLayer
         {
             using (AutoReservationContext context = new AutoReservationContext())
             {
-                var reservationen = context.Reservationen.ToList();
-                return reservationen.Find(r => r.ReservationsNr == id);
+                return context.Reservationen.ToList().Single(r => r.ReservationsNr == id);
             }
         }
 
