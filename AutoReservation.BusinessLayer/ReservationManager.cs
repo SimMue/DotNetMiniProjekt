@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using AutoReservation.BusinessLayer.Exceptions;
 using AutoReservation.Dal;
 using AutoReservation.Dal.Entities;
@@ -23,6 +24,22 @@ namespace AutoReservation.BusinessLayer
             using (AutoReservationContext context = new AutoReservationContext())
             {
                 return context.Reservationen.ToList().Single(r => r.ReservationsNr == id);
+            }
+        }
+
+        public Reservation GetByAutoId(int id)
+        {
+            using (AutoReservationContext context = new AutoReservationContext())
+            {
+                List<Reservation>  reservationList = context.Reservationen.ToList();
+                foreach (Reservation reservation in reservationList)
+                {
+                    if (reservation.AutoId == id)
+                    {
+                        return reservation;
+                    }
+                }
+                return null;
             }
         }
 
@@ -89,9 +106,13 @@ namespace AutoReservation.BusinessLayer
 
         public bool CheckAvailability(Reservation reservation)
         {
-            return reservation != null && 
-                   GetById(reservation.AutoId) != null && 
-                   GetById(reservation.AutoId).Bis <= reservation.Von;
+            if (reservation == null)
+            {
+                return false;
+            }
+
+            Reservation validReservation = GetByAutoId(reservation.AutoId);
+            return validReservation != null && validReservation.Bis <= reservation.Von;
         }
     }
 }

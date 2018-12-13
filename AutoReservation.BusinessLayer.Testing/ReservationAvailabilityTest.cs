@@ -71,7 +71,7 @@ namespace AutoReservation.BusinessLayer.Testing
             Reservation reservation = Target.GetById(1);
             Target.Delete(reservation);
 
-            Assert.Throws<InvalidOperationException>(() => Target.Update(reservation));
+            Assert.Throws<AutoUnavailableException>(() => Target.Update(reservation));
         }
 
     }
