@@ -14,15 +14,15 @@ namespace AutoReservation.BusinessLayer.Testing
         [Fact]
         public void UpdateReservationTest()
         {
-            Reservation changedReservation = target.GetById(1);
+            Reservation changedReservation = Target.GetById(1);
             changedReservation.AutoId = 2;
             changedReservation.KundeId = 2;
-            changedReservation.Von = new DateTime();
-            changedReservation.Bis = new DateTime();
+            changedReservation.Von = new DateTime(2020, 01, 21);
+            changedReservation.Bis = new DateTime(2020, 01, 23);
 
             target.Update(changedReservation);
 
-            Reservation dbReservation = target.GetById(1);
+            Reservation dbReservation = Target.GetById(1);
 
             Assert.Equal(changedReservation.AutoId, dbReservation.AutoId);
             Assert.Equal(changedReservation.KundeId, dbReservation.KundeId);
@@ -30,5 +30,7 @@ namespace AutoReservation.BusinessLayer.Testing
             Assert.Equal(changedReservation.Bis, dbReservation.Bis);
             Assert.Equal(changedReservation.RowVersion, dbReservation.RowVersion);
         }
+
+       
     }
 }
