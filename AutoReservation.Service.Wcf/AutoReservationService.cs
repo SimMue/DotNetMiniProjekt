@@ -10,7 +10,7 @@ using AutoReservation.Service.Wcf.Converters;
 
 namespace AutoReservation.Service.Wcf
 {
-    public abstract class AutoReservationService<TDto, TEntity> : IAutoReservationService<TDto>
+    public class AutoReservationService<TDto, TEntity> : IAutoReservationService<TDto>
     {
         protected readonly ManagerBase<TEntity> _manager;
         protected readonly DtoEntityConverter<TDto, TEntity> _converter;
@@ -58,9 +58,7 @@ namespace AutoReservation.Service.Wcf
 	        }
 		}
 
-	    public abstract bool CheckAvailability(TDto dto);
-		
-		public void Insert(TDto dto)
+        public void Insert(TDto dto)
         {
 	        try
 	        {

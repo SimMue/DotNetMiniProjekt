@@ -1,6 +1,10 @@
 ﻿using System;
+using System.ServiceModel;
 using AutoReservation.Common.DataTransferObjects;
+using AutoReservation.Common.DataTransferObjects.Faults;
 using AutoReservation.Common.Interfaces;
+using AutoReservation.Dal.Entities;
+using AutoReservation.Service.Wcf.Converters;
 using AutoReservation.TestEnvironment;
 using Xunit;
 
@@ -62,19 +66,19 @@ namespace AutoReservation.Service.Wcf.Testing
         [Fact]
         public void GetAutoByIdWithIllegalIdTest()
         {
-            throw new NotImplementedException("Test not implemented.");
+            Assert.Throws<FaultException<UnknownFault>>(() => AutoTarget.GetById(100));
         }
 
         [Fact]
         public void GetKundeByIdWithIllegalIdTest()
         {
-            throw new NotImplementedException("Test not implemented.");
+            Assert.Throws<FaultException<UnknownFault>>(() => KundeTarget.GetById(100));
         }
 
         [Fact]
         public void GetReservationByNrWithIllegalIdTest()
         {
-            throw new NotImplementedException("Test not implemented.");
+            Assert.Throws<FaultException<UnknownFault>>(() => ReservationTarget.GetById(100));
         }
 
         #endregion
@@ -84,19 +88,39 @@ namespace AutoReservation.Service.Wcf.Testing
         [Fact]
         public void InsertAutoTest()
         {
-            throw new NotImplementedException("Test not implemented.");
+            AutoDto autoDto = new AutoDto
+            {
+                AutoKlasse = (int) AutoKlasse.Luxusklasse,
+                Basistarif = 50,
+                Marke = "Audi C3"
+            };
+
+            AutoTarget.Insert(autoDto);
         }
 
         [Fact]
         public void InsertKundeTest()
         {
-            throw new NotImplementedException("Test not implemented.");
+            KundeDto kundeDto = new KundeDto
+            {
+                Geburtsdatum = new DateTime(),
+                Nachname = "Pong",
+                Vorname = "Lenis"
+            };
+
+            KundeTarget.Insert(kundeDto);
         }
 
         [Fact]
         public void InsertReservationTest()
         {
-            throw new NotImplementedException("Test not implemented.");
+            ReservationDto reservationDto = new ReservationDto
+            {
+                Von = new DateTime(2021, 2, 23),
+                Bis = new DateTime(2021, 2, 25)
+            };
+
+            ReservationTarget.Insert(reservationDto);
         }
 
         #endregion
@@ -106,19 +130,22 @@ namespace AutoReservation.Service.Wcf.Testing
         [Fact]
         public void DeleteAutoTest()
         {
-            throw new NotImplementedException("Test not implemented.");
+            var autoDto = AutoTarget.GetById(1);
+            AutoTarget.Delete(autoDto);
         }
 
         [Fact]
         public void DeleteKundeTest()
         {
-            throw new NotImplementedException("Test not implemented.");
+            var kundeDto = KundeTarget.GetById(1);
+            KundeTarget.Delete(kundeDto);
         }
 
         [Fact]
         public void DeleteReservationTest()
         {
-            throw new NotImplementedException("Test not implemented.");
+            var reservationDto = ReservationTarget.GetById(1);
+            ReservationTarget.Delete(reservationDto);
         }
 
         #endregion
@@ -128,19 +155,25 @@ namespace AutoReservation.Service.Wcf.Testing
         [Fact]
         public void UpdateAutoTest()
         {
-            throw new NotImplementedException("Test not implemented.");
+            var autoDto = AutoTarget.GetById(2);
+            autoDto.Marke = "Jugo";
+            AutoTarget.Update(autoDto);
         }
 
         [Fact]
         public void UpdateKundeTest()
         {
-            throw new NotImplementedException("Test not implemented.");
+            var kundeDto = KundeTarget.GetById(2);
+            kundeDto.Nachname = "Norris";
+            KundeTarget.Update(kundeDto);
         }
 
         [Fact]
         public void UpdateReservationTest()
         {
-            throw new NotImplementedException("Test not implemented.");
+            var reservationTarget = ReservationTarget.GetById(2);
+            reservationTarget.Bis = DateTime.Now;
+            ReservationTarget.Update(reservationTarget);
         }
 
         #endregion

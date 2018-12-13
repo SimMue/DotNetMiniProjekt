@@ -15,10 +15,6 @@ namespace AutoReservation.Common.Interfaces
 		TDto GetById(int id);
 
 		[OperationContract]
-		[FaultContract(typeof(UnknownFault))]
-	    bool CheckAvailability(TDto dto);
-
-		[OperationContract]
 	    [FaultContract(typeof(InvalidDateRangeFault))]
 	    [FaultContract(typeof(AutoUnavailableFault))]
 	    [FaultContract(typeof(UnknownFault))]

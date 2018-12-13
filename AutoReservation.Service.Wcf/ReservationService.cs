@@ -8,13 +8,12 @@ using AutoReservation.Service.Wcf.Converters;
 
 namespace AutoReservation.Service.Wcf
 {
-	class ReservationService : AutoReservationService<ReservationDto, Reservation>
+	class ReservationService : AutoReservationService<ReservationDto, Reservation>, IReservableService<ReservationDto>
 	{
 		public ReservationService(ReservationManager manager, DtoEntityConverter<ReservationDto, Reservation> converter) : base(manager, converter)
 		{
 		}
-
-		public override bool CheckAvailability(ReservationDto reservationDto)
+		public bool CheckAvailability(ReservationDto reservationDto)
 		{
 			try
 			{
