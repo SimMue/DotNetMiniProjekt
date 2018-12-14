@@ -20,6 +20,6 @@ namespace AutoReservation.Service.Wcf.Testing
             _kundeTarget ?? (_kundeTarget = new AutoReservationService<KundeDto, Kunde>(new KundeManager(), new KundeConverter()));
 
         protected override IAutoReservationService<ReservationDto> ReservationTarget =>
-            _reservationTarget ?? (_reservationTarget = new AutoReservationService<ReservationDto, Reservation>(new ReservationManager(), new ReservationConverter()));
+            _reservationTarget ?? (_reservationTarget = new ReservationService(new ReservationManager(), new ReservationConverter()));
     }
 }

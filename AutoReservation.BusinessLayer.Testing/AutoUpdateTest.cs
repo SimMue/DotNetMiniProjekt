@@ -6,8 +6,8 @@ namespace AutoReservation.BusinessLayer.Testing
 {
     public class AutoUpdateTests : TestBase
     {
-        private AutoManager target;
-        private AutoManager Target => target ?? (target = new AutoManager());
+        private AutoManager _target;
+        private AutoManager Target => _target ?? (_target = new AutoManager());
 
         [Fact]
         public void UpdateAutoTest()

@@ -8,8 +8,8 @@ namespace AutoReservation.BusinessLayer.Testing
 {
     public class ReservationAvailabilityTest : TestBase
     {
-        private ReservationManager target;
-        private ReservationManager Target => target ?? (target = new ReservationManager());
+        private ReservationManager _target;
+        private ReservationManager Target => _target ?? (_target = new ReservationManager());
 
         [Fact]
         public void CarAvailabilityTest()
@@ -21,9 +21,8 @@ namespace AutoReservation.BusinessLayer.Testing
                 Von = new DateTime(2020, 02, 10),
                 Bis = new DateTime(2020, 02, 26)
             };
-            Target.Insert(reservation);
 
-            Assert.NotNull(Target.GetById(5));
+            Assert.True(Target.CheckAvailability(reservation));
         }
 
         [Fact]
@@ -58,21 +57,15 @@ namespace AutoReservation.BusinessLayer.Testing
         [Fact]
         public void CarNotAvailableUpdateTest()
         {
-            Reservation changedReservation = Target.GetById(1);
-            changedReservation.Von = new DateTime(2020, 01, 12);
-            changedReservation.Bis = new DateTime(2020, 01, 19);
+            Reservation reservation = new Reservation
+            {
+                AutoId = 3,
+                KundeId = 3,
+                Von = new DateTime(2020, 01, 10),
+                Bis = new DateTime(2020, 01, 20)
+            };
 
-            Assert.Throws<AutoUnavailableException>(() => Target.Update(changedReservation));
+            Assert.Throws<AutoUnavailableException>(() => Target.Insert(reservation));
         }
-
-        [Fact]
-        public void CarNotAvailableDeletedTest()
-        {
-            Reservation reservation = Target.GetById(1);
-            Target.Delete(reservation);
-
-            Assert.Throws<AutoUnavailableException>(() => Target.Update(reservation));
-        }
-
     }
 }

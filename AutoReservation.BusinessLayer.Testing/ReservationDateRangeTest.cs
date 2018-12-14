@@ -9,15 +9,15 @@ namespace AutoReservation.BusinessLayer.Testing
     public class ReservationDateRangeTest
         : TestBase
     {
-        private ReservationManager target;
-        private ReservationManager Target => target ?? (target = new ReservationManager());
+        private ReservationManager _target;
+        private ReservationManager Target => _target ?? (_target = new ReservationManager());
 
         [Fact]
         public void MinimumDateRangeTest()
         {
             Reservation newReservation = new Reservation
             {
-                AutoId = 2,
+                AutoId = 3,
                 KundeId = 1,
                 Von = new DateTime(2020, 05, 19),
                 Bis = new DateTime(2020, 05, 20)

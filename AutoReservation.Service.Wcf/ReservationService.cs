@@ -8,7 +8,7 @@ using AutoReservation.Service.Wcf.Converters;
 
 namespace AutoReservation.Service.Wcf
 {
-	class ReservationService : AutoReservationService<ReservationDto, Reservation>, IReservableService<ReservationDto>
+	public class ReservationService : AutoReservationService<ReservationDto, Reservation>, IReservableService<ReservationDto>
 	{
 		public ReservationService(ReservationManager manager, DtoEntityConverter<ReservationDto, Reservation> converter) : base(manager, converter)
 		{
@@ -18,8 +18,8 @@ namespace AutoReservation.Service.Wcf
 			try
 			{
 				WriteActualMethod();
-				Reservation entity = _converter.ConvertToEntity(reservationDto);
-				return ((ReservationManager)_manager).CheckAvailability(entity);
+				Reservation entity = Converter.ConvertToEntity(reservationDto);
+				return ((ReservationManager)Manager).CheckAvailability(entity);
 			}
 			catch (Exception exception)
 			{

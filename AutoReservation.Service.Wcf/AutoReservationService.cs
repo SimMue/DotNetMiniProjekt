@@ -12,13 +12,13 @@ namespace AutoReservation.Service.Wcf
 {
     public class AutoReservationService<TDto, TEntity> : IAutoReservationService<TDto>
     {
-        protected readonly ManagerBase<TEntity> _manager;
-        protected readonly DtoEntityConverter<TDto, TEntity> _converter;
+        protected readonly ManagerBase<TEntity> Manager;
+        protected readonly DtoEntityConverter<TDto, TEntity> Converter;
 
         public AutoReservationService(ManagerBase<TEntity> manager, DtoEntityConverter<TDto, TEntity> converter)
         {
-            _manager = manager;
-            _converter = converter;
+            Manager = manager;
+            Converter = converter;
         }
 
         protected static void WriteActualMethod()
@@ -29,8 +29,8 @@ namespace AutoReservation.Service.Wcf
            try
 	        {
 				WriteActualMethod();
-		        List<TEntity> entities = _manager.GetAll();
-		        return _converter.ConvertToDtos(entities);
+		        List<TEntity> entities = Manager.GetAll();
+		        return Converter.ConvertToDtos(entities);
 			}
 	        catch (Exception exception)
 	        {
@@ -46,8 +46,8 @@ namespace AutoReservation.Service.Wcf
 	        try
 	        {
 				WriteActualMethod();
-		        TEntity entity = _manager.GetById(id);
-		        return _converter.ConvertToDto(entity);
+		        TEntity entity = Manager.GetById(id);
+		        return Converter.ConvertToDto(entity);
 			}
 	        catch (Exception exception)
 	        {
@@ -63,8 +63,8 @@ namespace AutoReservation.Service.Wcf
 	        try
 	        {
 		        WriteActualMethod();
-		        TEntity entity = _converter.ConvertToEntity(dto);
-				_manager.Insert(entity);
+		        TEntity entity = Converter.ConvertToEntity(dto);
+				Manager.Insert(entity);
 	        }
 	        catch (InvalidDateRangeException exception)
 	        {
@@ -94,8 +94,8 @@ namespace AutoReservation.Service.Wcf
 	        try
 	        {
 		        WriteActualMethod();
-		        TEntity entity = _converter.ConvertToEntity(dto);
-				_manager.Update(entity);
+		        TEntity entity = Converter.ConvertToEntity(dto);
+				Manager.Update(entity);
 	        }
 	        catch (InvalidDateRangeException e)
 	        {
@@ -132,8 +132,8 @@ namespace AutoReservation.Service.Wcf
 	        try
 	        {
 		        WriteActualMethod();
-		        TEntity entity = _converter.ConvertToEntity(dto);
-				_manager.Delete(entity);
+		        TEntity entity = Converter.ConvertToEntity(dto);
+				Manager.Delete(entity);
 			}
 		    catch (Exception exception)
 	        {

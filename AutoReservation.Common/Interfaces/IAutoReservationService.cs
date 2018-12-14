@@ -4,6 +4,7 @@ using AutoReservation.Common.DataTransferObjects.Faults;
 
 namespace AutoReservation.Common.Interfaces
 {
+    [ServiceContract]
     public interface IAutoReservationService<TDto>
     {
 	    [OperationContract]

@@ -11,29 +11,56 @@ namespace AutoReservation.Service.Wcf.Testing
         : ServiceTestBase
         , IClassFixture<ServiceTestRemoteFixture>
     {
-        private readonly ServiceTestRemoteFixture serviceTestRemoteFixture;
+        private readonly ServiceTestRemoteFixture _serviceTestRemoteFixture;
 
         public ServiceTestRemote(ServiceTestRemoteFixture serviceTestRemoteFixture)
         {
-            this.serviceTestRemoteFixture = serviceTestRemoteFixture;
+            this._serviceTestRemoteFixture = serviceTestRemoteFixture;
         }
 
-        private IAutoReservationService<AutoDto> autoTarget;
+        private IAutoReservationService<AutoDto> _autoTarget;
+        private IAutoReservationService<KundeDto> _kundeTarget;
+        private IAutoReservationService<ReservationDto> _reservationTarget;
+
+
         protected override IAutoReservationService<AutoDto> AutoTarget
         {
             get
             {
-                if (autoTarget == null)
+                if (_autoTarget == null)
                 {
                     ChannelFactory<IAutoReservationService<AutoDto>> channelFactory = new ChannelFactory<IAutoReservationService<AutoDto>>("AutoReservationService");
-                    autoTarget = channelFactory.CreateChannel();
+                    _autoTarget = channelFactory.CreateChannel();
                 }
-                return autoTarget;
+                return _autoTarget;
             }
         }
 
-        protected override IAutoReservationService<KundeDto> KundeTarget { get; }
-        protected override IAutoReservationService<ReservationDto> ReservationTarget { get; }
+        protected override IAutoReservationService<KundeDto> KundeTarget
+        {
+            get
+            {
+                if (_kundeTarget == null)
+                {
+                    ChannelFactory<IAutoReservationService<KundeDto>> channelFactory = new ChannelFactory<IAutoReservationService<KundeDto>>("AutoReservationService");
+                    _kundeTarget = channelFactory.CreateChannel();
+                }
+                return _kundeTarget;
+            }
+        }
+
+        protected override IAutoReservationService<ReservationDto> ReservationTarget
+        {
+            get
+            {
+                if (_reservationTarget == null)
+                {
+                    ChannelFactory<IAutoReservationService<ReservationDto>> channelFactory = new ChannelFactory<IAutoReservationService<ReservationDto>>("AutoReservationService");
+                    _reservationTarget = channelFactory.CreateChannel();
+                }
+                return _reservationTarget;
+            }
+        }
     }
 
     public class ServiceTestRemoteFixture

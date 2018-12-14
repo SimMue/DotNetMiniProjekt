@@ -8,8 +8,8 @@ namespace AutoReservation.BusinessLayer.Testing
     public class ReservationUpdateTest
         : TestBase
     {
-        private ReservationManager target;
-        private ReservationManager Target => target ?? (target = new ReservationManager());
+        private ReservationManager _target;
+        private ReservationManager Target => _target ?? (_target = new ReservationManager());
 
         [Fact]
         public void UpdateReservationTest()
@@ -20,7 +20,7 @@ namespace AutoReservation.BusinessLayer.Testing
             changedReservation.Von = new DateTime(2020, 01, 21);
             changedReservation.Bis = new DateTime(2020, 01, 23);
 
-            target.Update(changedReservation);
+            _target.Update(changedReservation);
 
             Reservation dbReservation = Target.GetById(1);
 

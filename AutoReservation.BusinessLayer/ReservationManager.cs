@@ -27,19 +27,12 @@ namespace AutoReservation.BusinessLayer
             }
         }
 
-        public Reservation GetByAutoId(int id)
+        public List<Reservation> GetByAutoId(int id)
         {
             using (AutoReservationContext context = new AutoReservationContext())
             {
                 List<Reservation>  reservationList = context.Reservationen.ToList();
-                foreach (Reservation reservation in reservationList)
-                {
-                    if (reservation.AutoId == id)
-                    {
-                        return reservation;
-                    }
-                }
-                return null;
+                return reservationList.Where(r => r.AutoId == id).ToList();
             }
         }
 
@@ -111,8 +104,13 @@ namespace AutoReservation.BusinessLayer
                 return false;
             }
 
-            Reservation validReservation = GetByAutoId(reservation.AutoId);
-            return validReservation != null && validReservation.Bis <= reservation.Von;
+            List<Reservation> existingReservations = GetByAutoId(reservation.AutoId);
+            return !existingReservations.Any(r => HasOverlappingDateRange(r, reservation));
+        }
+
+        private bool HasOverlappingDateRange(Reservation existingReservation, Reservation newReservation)
+        {
+            return existingReservation.Von < newReservation.Bis && newReservation.Von < existingReservation.Bis;
         }
     }
 }

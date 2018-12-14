@@ -4,8 +4,8 @@ namespace AutoReservation.TestEnvironment
 {
     public abstract class TestBase
     {
-        private static bool firstTestInExecution = true;
-        private static object lockObject = new object();
+        private static bool _firstTestInExecution = true;
+        private static object _lockObject = new object();
 
         /// <summary>
         /// Constructor, runs before every run of a test method.
@@ -21,16 +21,16 @@ namespace AutoReservation.TestEnvironment
         /// </summary>
         private void InitializeTestEnvironment()
         {
-            lock (lockObject)
+            lock (_lockObject)
             {
-                if (firstTestInExecution)
+                if (_firstTestInExecution)
                 {
                     using (AutoReservationContext context = new AutoReservationContext())
                     {
                         context.Database.EnsureDeleted();
                         context.Database.EnsureCreated();
                         context.InitializeTestData();
-                        firstTestInExecution = false;
+                        _firstTestInExecution = false;
                         return;
                     }
                 }
